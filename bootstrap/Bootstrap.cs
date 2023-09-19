@@ -48,9 +48,9 @@ public class Bootstrap : IBootstrap
         }
         
         // Make sure we are running on Ubuntu 20.04 or later
-        if (int.TryParse(osReleaseInfo["VERSION_ID"].Trim('.'), out var version))
+        if (double.TryParse(osReleaseInfo["VERSION_ID"].Trim('"'), out var version))
         {
-            if (version < 2004)
+            if (version < 20.04)
             {
                 Log.Fatal("This bootstrap is only supported on Ubuntu 20.04 or later.");
                 Environment.Exit(1);
