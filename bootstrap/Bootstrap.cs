@@ -20,6 +20,8 @@ public class Bootstrap : IBootstrap
         
         // Check if we are running as root or via Sudo
         await CheckIfRunningAsRootOrSudo();
+        
+        Log.Information("Preflight checks complete.");
     }
     
     private Task CheckIfRunningAsRootOrSudo()
@@ -28,7 +30,7 @@ public class Bootstrap : IBootstrap
         if (!string.Equals(Environment.GetEnvironmentVariable("USER"), "root", StringComparison.OrdinalIgnoreCase) &&
             string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SUDO_USER")))
         {
-            Log.Fatal("This bootstrap needs to be run as root or via Sudo.");
+            Log.Fatal("\t❌ This bootstrap needs to be run as root or via Sudo.");
             Environment.Exit(1);
         }
         
@@ -45,7 +47,7 @@ public class Bootstrap : IBootstrap
         // Make sure we are running on Ubuntu
         if (!string.Equals(osReleaseInfo["ID"], "ubuntu", StringComparison.OrdinalIgnoreCase))
         {
-            Log.Fatal("This bootstrap is only supported on Ubuntu.");
+            Log.Fatal("\t❌ This bootstrap is only supported on Ubuntu.");
             Environment.Exit(1);
         }
         
@@ -54,13 +56,13 @@ public class Bootstrap : IBootstrap
         {
             if (version < 20.04)
             {
-                Log.Fatal("This bootstrap is only supported on Ubuntu 20.04 or later.");
+                Log.Fatal("\t❌ This bootstrap is only supported on Ubuntu 20.04 or later.");
                 Environment.Exit(1);
             }
         }
         else
         {
-            Log.Fatal("Unable to parse Ubuntu version.");
+            Log.Fatal("\t❌ Unable to parse Ubuntu version.");
             Environment.Exit(1);
         }
         
@@ -86,7 +88,7 @@ public class Bootstrap : IBootstrap
         }
         else
         {
-            Log.Fatal("/etc/os-release does not exist.");
+            Log.Fatal("\t❌ /etc/os-release does not exist.");
             Environment.Exit(1);
         }
         
