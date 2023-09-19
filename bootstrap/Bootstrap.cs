@@ -32,7 +32,7 @@ public class Bootstrap : IBootstrap
             Environment.Exit(1);
         }
         
-        Log.Information("\tCheck: Running as root or via Sudo. ✅");
+        Log.Information("\t✅ Running as root or via Sudo.");
         
         return Task.CompletedTask;
     }
@@ -64,7 +64,7 @@ public class Bootstrap : IBootstrap
             Environment.Exit(1);
         }
         
-        Log.Information("\tCheck: Running on supported Ubuntu version. ✅");
+        Log.Information("\t✅ Running on supported Ubuntu version.");
     }
 
     private async Task<Dictionary<string,string>> GetOsReleaseInfo()
