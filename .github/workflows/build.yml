@@ -27,8 +27,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends clang zlib1g-dev
       - name: Publish
         run: dotnet publish -r linux-x64 -c Release
-      - name: Upload artifact
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Upload artifact
+          name: build-artifacts
           path: ./bootstrap/bin/Release/net8.0/linux-x64/publish/
