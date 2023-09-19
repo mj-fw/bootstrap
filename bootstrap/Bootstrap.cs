@@ -18,6 +18,21 @@ public class Bootstrap : IBootstrap
         // Check OS release information
         await CheckOsReleaseInfo();
         
+        // Check if we are running as root
+        await CheckIfRunningAsRoot();
+    }
+
+    private Task CheckIfRunningAsRoot()
+    {
+        // Check if we are running as root via env USER
+        if (!string.Equals(Environment.GetEnvironmentVariable("USER"), "root", StringComparison.OrdinalIgnoreCase) &&
+            string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SUDO_USER")))
+        {
+            Log.Fatal("This bootstrap needs to be run as root or via Sudo.");
+            Environment.Exit(1);
+        }
+        
+        return Task.CompletedTask;
     }
 
     private async Task CheckOsReleaseInfo()
